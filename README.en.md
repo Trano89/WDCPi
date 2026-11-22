@@ -77,7 +77,7 @@ flowchart LR
   1. installs updates;
   2. rebuilds the site images with the latest fixes;
   3. checks that every site answers, and rolls back the ones that don't;
-  4. makes the backups;
+  4. makes the scheduled backups (on Sundays by default);
   5. reboots if needed.
 
 You log in to the console with the **Pi's Linux account** created during installation. Members of the `sudo`
@@ -172,16 +172,18 @@ Log in with the **username and password** chosen in Imager.
 Do these once, in this order:
 
 1. **A fixed address for the Pi.** The best way is to reserve it in your router (a "static DHCP lease" or
-   "address reservation"). Otherwise, use **Système → Réseau** (System → Network) in the console. Without a fixed
+   "address reservation"). Otherwise, use the console's **Réseau du Pi** (Pi network) page, in expert mode. Without a fixed
    address, port forwarding stops working the day the Pi's address changes.
-2. **Notifications**, under **Réglages → Notifications** (Settings → Notifications): enter your e-mail address
+2. **Notifications**, under **Réglages & système → Notifications** (Settings → Notifications): enter your e-mail address
    and a sending (SMTP) server, for example your e-mail provider's. Send a test e-mail. You will be told when the
    disk fills up, the Pi overheats, a backup is missing or an update fails.
-3. **Certificate e-mail**, under **Services → Serveur web → Régler** (Services → Web server → Settings): Let's
+3. **Certificate e-mail**, under **Services → Serveur web (Caddy) → Régler** (Services → Web server → Settings): Let's
    Encrypt writes to you if a certificate has a problem.
-4. **Backup USB key**, under **Sauvegardes → Clé USB** (Backups → USB key): plug in the key and follow the wizard.
-   The key is encrypted, and WDCPi shows a **passphrase** only once. **Write it down and keep it away from the
-   Pi.** Without it nobody can read the key, neither you nor a thief.
+4. **Copy to a USB key**: backups are made automatically on the Pi (every Sunday by default, adjustable under **Réglages & système → Planifications**). To keep a copy elsewhere, plug in a USB key,
+   open the **Stockage USB** (USB storage) page, then **Copier une sauvegarde ici** (copy a backup here). The copy is
+   encrypted. After the first copy, open the **Sauvegardes** (Backups) page → **Afficher la phrase secrète** (show
+   the passphrase): **write it down and keep it away from the Pi**, then confirm you have noted it. Without it,
+   nobody can read a copy, neither you nor a thief.
 5. **Updates**, under **Logiciels et mises à jour** (Software and updates): keep the defaults. Updates run
    automatically at night, security fixes are applied immediately, and the Pi reboots on its own when needed.
 

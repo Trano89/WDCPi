@@ -68,7 +68,7 @@ flowchart LR
 - **Le pare-feu** refuse tout ce qui n'est pas prévu. Seuls les sites (80/443) et, si vous l'activez, le VPN sont
   joignables depuis Internet.
 - **La nuit**, le Pi installe les mises à jour, reconstruit les images des sites avec les derniers correctifs,
-  vérifie que chaque site répond, revient en arrière sinon, fait les sauvegardes, puis redémarre si besoin.
+  vérifie que chaque site répond, revient en arrière sinon, fait les sauvegardes prévues (le dimanche par défaut), puis redémarre si besoin.
 
 Vous vous connectez à la console avec le **compte Linux du Pi** créé à l'installation. Les membres du groupe
 `sudo` sont administrateurs ; les autres comptes peuvent seulement consulter.
@@ -163,16 +163,18 @@ Connectez-vous avec le **compte et le mot de passe** choisis dans Imager.
 Dans cet ordre, une seule fois :
 
 1. **Adresse fixe du Pi.** Le mieux est de la réserver dans votre box (« bail DHCP statique » ou « réservation
-   d'adresse »). Sinon : **Système → Réseau** dans la console. Sans adresse fixe, la redirection des ports de la
+   d'adresse »). Sinon : page **Réseau du Pi** de la console (mode expert). Sans adresse fixe, la redirection des ports de la
    box cessera de fonctionner le jour où l'adresse change.
-2. **Notifications** (**Réglages → Notifications**) : votre adresse e-mail et un serveur d'envoi (SMTP), par
+2. **Notifications** (**Réglages & système → Notifications**) : votre adresse e-mail et un serveur d'envoi (SMTP), par
    exemple celui de votre fournisseur de messagerie. Envoyez un e-mail d'essai. Vous serez prévenu si le disque se
    remplit, si le Pi chauffe, si une sauvegarde manque ou si une mise à jour échoue.
-3. **E-mail des certificats** (**Services → Serveur web → Régler**) : Let's Encrypt vous écrit si un certificat
+3. **E-mail des certificats** (**Services → Serveur web (Caddy) → Régler**) : Let's Encrypt vous écrit si un certificat
    pose problème.
-4. **Clé USB de sauvegarde** (**Sauvegardes → Clé USB**) : branchez la clé et suivez l'assistant. Elle est
-   chiffrée, et WDCPi affiche une **phrase secrète** une seule fois : **notez-la et rangez-la hors du Pi**. Sans
-   elle, la clé ne peut pas être relue, ni par vous ni par un voleur.
+4. **Copie sur clé USB** : les sauvegardes sont faites automatiquement sur le Pi (chaque dimanche par défaut, réglable dans **Réglages & système → Planifications**). Pour en garder une copie à part,
+   branchez une clé USB, ouvrez la page **Stockage USB**, puis **Copier une sauvegarde ici**. La copie est chiffrée.
+   Après la première copie, ouvrez la page **Sauvegardes** → **Afficher la phrase secrète** : **notez-la et
+   rangez-la hors du Pi**, puis confirmez qu'elle est notée. Sans elle, une copie ne peut pas être relue, ni par
+   vous ni par un voleur.
 5. **Mises à jour** (**Logiciels et mises à jour**) : laissez les réglages par défaut (automatiques la nuit,
    correctifs de sécurité immédiats, redémarrage automatique si nécessaire).
 
