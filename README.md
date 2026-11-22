@@ -170,11 +170,17 @@ Dans cet ordre, une seule fois :
    remplit, si le Pi chauffe, si une sauvegarde manque ou si une mise à jour échoue.
 3. **E-mail des certificats** (**Services → Serveur web (Caddy) → Régler**) : Let's Encrypt vous écrit si un certificat
    pose problème.
-4. **Copie sur clé USB** : les sauvegardes sont faites automatiquement sur le Pi (chaque dimanche par défaut, réglable dans **Réglages & système → Planifications**). Pour en garder une copie à part,
-   branchez une clé USB, ouvrez la page **Stockage USB**, puis **Copier une sauvegarde ici**. La copie est chiffrée.
-   Après la première copie, ouvrez la page **Sauvegardes** → **Afficher la phrase secrète** : **notez-la et
-   rangez-la hors du Pi**, puis confirmez qu'elle est notée. Sans elle, une copie ne peut pas être relue, ni par
-   vous ni par un voleur.
+4. **Clé USB de sauvegarde** : les sauvegardes sont faites automatiquement sur le Pi (chaque dimanche par défaut,
+   réglable dans **Réglages & système → Planifications**), puis copiées, chiffrées, sur une clé USB dédiée qui reste
+   branchée sur le Pi. Branchez la clé, ouvrez la page **Stockage USB**, puis **Utiliser comme clé de sauvegarde** et
+   choisissez-la. Si elle n'est pas prête, la console propose de l'**effacer et la préparer** (tapez `EFFACER` pour
+   confirmer : tout son contenu est perdu). La console l'essaie aussitôt (coupure, allumage, écriture) ; ensuite, la
+   clé reste électriquement coupée en dehors des copies.
+   Ouvrez alors la page **Sauvegardes** → **Phrase secrète de chiffrement** → **Afficher la phrase secrète** :
+   **notez-la et rangez-la hors du Pi**, puis confirmez qu'elle est notée. Sans elle, les copies de la clé ne peuvent
+   pas être relues, ni par vous ni par un voleur.
+   Pour emporter de temps en temps une copie ailleurs, branchez un autre disque USB : page **Stockage USB** →
+   **Copier une sauvegarde ici** (copie chiffrée avec la même phrase).
 5. **Mises à jour** (**Logiciels et mises à jour**) : laissez les réglages par défaut (automatiques la nuit,
    correctifs de sécurité immédiats, redémarrage automatique si nécessaire).
 
@@ -269,13 +275,19 @@ l'erreur exacte et ce qu'il faut corriger.
 | Vous voulez… | Où, dans la console |
 |---|---|
 | Voir si tout va bien | **Tableau de bord** : état des sites, disque, température, dernières sauvegardes |
-| Sauvegarder ou restaurer un site | page du site → **Sauvegardes**, ou page **Sauvegardes** |
+| Sauvegarder ou restaurer un site | page du site → **Sauvegardes**, ou page **Sauvegardes** (copies du Pi, et **Copies sur la clé USB** → **Restaurer ce site**) |
 | Voir les visites | page du site → **Voir les visites et le journal** |
 | Tout mettre à jour maintenant | **Logiciels et mises à jour** → **Tout mettre à jour** |
 | Administrer depuis l'extérieur | **VPN** → WireGuard → ajouter un appareil → scanner le QR code avec l'application WireGuard. Redirigez alors le port UDP 51820 de la box vers le Pi |
 | Ouvrir un port, bloquer une adresse | **Sécurité → Pare-feu** : chaque changement s'annule seul après 2 minutes si vous ne le confirmez pas |
 | Régler un service (MariaDB, heure, journaux) | **Services** |
 | Ajouter un compte (lecture seule ou administrateur) | **Comptes** |
+
+**Restaurer depuis la clé USB** : page **Sauvegardes** → **Copies sur la clé USB**. La liste montre chaque copie par
+site (et la copie « système ») avec sa date ; **Restaurer ce site** remet les fichiers et la base de données de ce
+jour-là. L'état actuel du site est d'abord sauvegardé sur le Pi, et une copie venue d'un autre Pi est contrôlée comme
+une sauvegarde importée. La clé garde par défaut une copie par jour pendant 7 jours, une par semaine pendant 5
+semaines et une par mois pendant 12 mois, et vérifie ses copies après chaque nettoyage.
 
 La **mise à jour de WDCPi** elle-même arrive automatiquement depuis ce dépôt GitHub. Chaque version est **signée** ;
 le Pi vérifie la signature avant d'installer, garde l'ancienne version et y revient seul si la nouvelle ne répond
@@ -342,7 +354,7 @@ l'onglet **Security** de ce dépôt (« Report a vulnerability »).
 | Un site ne répond plus | Page du site → **Redémarrer le site**. Sinon, **Messages techniques** du site, ou restaurez la dernière sauvegarde |
 | Le Pi est lent ou plante | Vérifiez l'alimentation et la température (tableau de bord). Préférez un SSD USB à la carte SD |
 | Mot de passe du compte oublié | Il faut un accès SSH par clé, ou brancher écran et clavier, puis changer le mot de passe avec `passwd` |
-| Passer à une nouvelle version de Debian | Gravez la nouvelle image WDCPi sur une **autre** carte, puis restaurez votre sauvegarde complète (**Sauvegardes → Importer une sauvegarde**). L'ancienne carte reste votre solution de repli |
+| Passer à une nouvelle version de Debian | Gravez la nouvelle image WDCPi sur une **autre** carte et démarrez avec la même clé USB branchée. **Stockage USB → Utiliser comme clé de sauvegarde** : choisissez la clé (rien n'y est effacé). **Sauvegardes → Copies sur la clé USB** : saisissez sa phrase secrète si demandé, puis **Restaurer ce site** pour chaque site. L'ancienne carte reste votre solution de repli |
 
 Pour signaler un problème : onglet [**Issues**](https://github.com/Trano89/WDCPi/issues). Indiquez votre modèle de Pi,
 la version de WDCPi (en bas du menu, à gauche) et ce qui s'affiche. N'y mettez jamais de mot de passe.

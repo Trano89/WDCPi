@@ -179,11 +179,17 @@ Do these once, in this order:
    disk fills up, the Pi overheats, a backup is missing or an update fails.
 3. **Certificate e-mail**, under **Services → Serveur web (Caddy) → Régler** (Services → Web server → Settings): Let's
    Encrypt writes to you if a certificate has a problem.
-4. **Copy to a USB key**: backups are made automatically on the Pi (every Sunday by default, adjustable under **Réglages & système → Planifications**). To keep a copy elsewhere, plug in a USB key,
-   open the **Stockage USB** (USB storage) page, then **Copier une sauvegarde ici** (copy a backup here). The copy is
-   encrypted. After the first copy, open the **Sauvegardes** (Backups) page → **Afficher la phrase secrète** (show
-   the passphrase): **write it down and keep it away from the Pi**, then confirm you have noted it. Without it,
-   nobody can read a copy, neither you nor a thief.
+4. **Backup USB key**: backups are made automatically on the Pi (every Sunday by default, adjustable under
+   **Réglages & système → Planifications**), then copied, encrypted, to a dedicated USB key that stays plugged into
+   the Pi. Plug in the key, open the **Stockage USB** (USB storage) page, then **Utiliser comme clé de sauvegarde**
+   (use as backup key) and pick it. If it is not ready, the console offers to **erase and prepare** it (type
+   `EFFACER` to confirm: everything on it is lost). The console tests it right away (power off, power on, write);
+   afterwards the key stays electrically switched off outside the copies.
+   Then open the **Sauvegardes** (Backups) page → **Phrase secrète de chiffrement** (encryption passphrase) →
+   **Afficher la phrase secrète** (show the passphrase): **write it down and keep it away from the Pi**, then confirm
+   you have noted it. Without it, nobody can read the key's copies, neither you nor a thief.
+   To take a copy elsewhere from time to time, plug in another USB drive: **Stockage USB** page → **Copier une
+   sauvegarde ici** (copy a backup here), encrypted with the same passphrase.
 5. **Updates**, under **Logiciels et mises à jour** (Software and updates): keep the defaults. Updates run
    automatically at night, security fixes are applied immediately, and the Pi reboots on its own when needed.
 
@@ -285,13 +291,19 @@ on its own, usually in under a minute. It is then **renewed automatically**. If 
 | You want to… | Where, in the console |
 |---|---|
 | Check that all is well | **Tableau de bord** (Dashboard): site status, disk, temperature, latest backups |
-| Back up or restore a site | site page → **Sauvegardes** (Backups), or the **Sauvegardes** page |
+| Back up or restore a site | site page → **Sauvegardes** (Backups), or the **Sauvegardes** page (copies on the Pi, and **Copies sur la clé USB** → **Restaurer ce site**, restore this site) |
 | See your visitors | site page → **Voir les visites et le journal** (Visits and log) |
 | Update everything now | **Logiciels et mises à jour** → **Tout mettre à jour** (Update everything) |
 | Manage the Pi from outside | **VPN** → WireGuard → add a device → scan the QR code with the WireGuard app. Then forward UDP port 51820 on your router to the Pi |
 | Open a port or block an address | **Sécurité → Pare-feu** (Security → Firewall). A change you do not confirm within 2 minutes is undone on its own |
 | Tune a service (MariaDB, time, logs) | **Services** |
 | Add an account (read-only or administrator) | **Comptes** (Accounts) |
+
+**Restoring from the USB key**: **Sauvegardes** page → **Copies sur la clé USB** (copies on the USB key). The list shows
+every copy per site (and the "système" copy) with its date; **Restaurer ce site** (restore this site) brings back
+that day's files and database. The site's current state is first saved on the Pi, and a copy made by another Pi is
+checked like an imported backup. By default the key keeps one copy a day for 7 days, one a week for 5 weeks and one
+a month for 12 months, and checks its copies after each clean-up.
 
 **WDCPi itself is updated** automatically from this GitHub repository. Every release is **signed**. The Pi checks
 the signature before installing, keeps the previous version, and goes back to it on its own if the new one does
@@ -363,7 +375,7 @@ Found a vulnerability? Please do **not** post it in an issue. Report it privatel
 | A site stops answering | Site page → **Redémarrer le site** (Restart the site). Otherwise look at the site's **Messages techniques** (technical messages), or restore the latest backup |
 | The Pi is slow or crashes | Check the power supply and the temperature (dashboard). A USB SSD is better than an SD card |
 | Forgotten account password | You need SSH access with a key, or a screen and keyboard; then change the password with `passwd` |
-| Moving to a new Debian release | Write the new WDCPi image to **another** card, then restore your full backup (**Sauvegardes → Importer une sauvegarde**, Import a backup). The old card stays as your fallback |
+| Moving to a new Debian release | Write the new WDCPi image to **another** card and start with the same USB key plugged in. **Stockage USB → Utiliser comme clé de sauvegarde**: pick the key (nothing on it is erased). **Sauvegardes → Copies sur la clé USB**: type its passphrase if asked, then **Restaurer ce site** (restore this site) for each site. The old card stays as your fallback |
 
 To report a problem, use the [**Issues**](https://github.com/Trano89/WDCPi/issues) tab. Give your Pi model, the
 WDCPi version (bottom of the left menu) and what you see on screen. Never post a password.
